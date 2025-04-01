@@ -3,7 +3,7 @@ const fs = require('fs');
 const EventAsset = require('../models/eventAssetModel');
 
 const eventAssetController = {
-  // Serve a file directly by asset ID
+  
   getFileById: async (req, res) => {
     try {
       const asset = await EventAsset.findById(req.params.id);
@@ -26,7 +26,7 @@ const eventAssetController = {
     }
   },
 
-  // Serve static files from upload directory
+  
   getStaticFile: (req, res) => {
     const filePath = path.join(__dirname, '..', 'uploads', req.params.folder, req.params.filename);
     
@@ -41,7 +41,7 @@ const eventAssetController = {
     res.sendFile(filePath);
   },
 
-  // Get all files across all events
+  
   getAllFiles: async (req, res) => {
     try {
       const files = await EventAsset.find()
@@ -54,7 +54,7 @@ const eventAssetController = {
     }
   },
 
-  // Get files by type
+  
   getFilesByType: async (req, res) => {
     try {
       const typePattern = new RegExp(req.params.type, 'i');
@@ -68,7 +68,7 @@ const eventAssetController = {
     }
   },
 
-  // Get files by tag
+  
   getFilesByTag: async (req, res) => {
     try {
       const files = await EventAsset.find({ tags: req.params.tag })
@@ -82,7 +82,7 @@ const eventAssetController = {
   }
 };
 
-// Helper function to determine content type
+
 function getContentType(extension) {
   const contentTypes = {
     '.jpg': 'image/jpeg',

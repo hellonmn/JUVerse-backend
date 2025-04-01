@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const eventAssetController = require('../controllers/fileAccessController');
 
-// Middleware to validate ObjectId
+
 const validateObjectId = (req, res, next) => {
   const mongoose = require('mongoose');
   const id = req.params.id;
@@ -12,7 +12,7 @@ const validateObjectId = (req, res, next) => {
   next();
 };
 
-// Routes
+
 router.get('/asset/:id', validateObjectId, eventAssetController.getFileById);
 router.get('/uploads/:folder/:filename', eventAssetController.getStaticFile);
 router.get('/', eventAssetController.getAllFiles);

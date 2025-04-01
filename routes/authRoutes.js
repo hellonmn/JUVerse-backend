@@ -4,7 +4,7 @@ const authController = require('../controllers/authController');
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');
 
-// Authentication Routes
+// authentication routes
 router.post('/register', authController.register);
 router.post('/login', authController.login);
 

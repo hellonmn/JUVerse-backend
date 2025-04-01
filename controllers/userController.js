@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
 
-// Create user (admin only)
+
 exports.createUser = async (req, res) => {
     const { username, password, role, name, dob, email, ...otherFields } = req.body;
 
@@ -35,7 +35,7 @@ exports.createUser = async (req, res) => {
     }
 };
 
-// Get all users (admin only)
+
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
@@ -46,7 +46,7 @@ exports.getAllUsers = async (req, res) => {
 };
 
 
-// Get user by ID (admin or self)
+
 exports.getUserById = async (req, res) => {
     const userId = req.params.id;
 
@@ -65,7 +65,7 @@ exports.getUserById = async (req, res) => {
     }
 };
 
-// Update user (admin or self)
+
 exports.updateUser = async (req, res) => {
     const userId = req.params.id;
 
@@ -90,7 +90,7 @@ exports.updateUser = async (req, res) => {
         user.name = name || user.name;
         user.dob = dob || user.dob;
         user.email = email || user.email;
-        Object.assign(user, otherFields); // Update other fields if provided
+        Object.assign(user, otherFields);
 
         await user.save();
         res.status(200).json({ message: 'User updated successfully', user });
@@ -99,7 +99,7 @@ exports.updateUser = async (req, res) => {
     }
 };
 
-// Delete user (admin only)
+
 exports.deleteUser = async (req, res) => {
     const userId = req.params.id;
 
@@ -109,7 +109,7 @@ exports.deleteUser = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Only admin can delete user
+        
         if (req.user.role !== 'admin') {
             return res.status(403).json({ message: 'You are not authorized to delete this user' });
         }
