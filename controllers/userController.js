@@ -50,6 +50,10 @@ exports.getAllUsers = async (req, res) => {
 exports.getUserById = async (req, res) => {
     const userId = req.params.id;
 
+    if (!req.user) {
+        return res.status(401).json({ message: 'User not authenticated' });
+    }
+
     if (req.user.id !== userId && req.user.role !== 'admin') {
         return res.status(403).json({ message: 'You are not authorized to view this user' });
     }
@@ -66,8 +70,13 @@ exports.getUserById = async (req, res) => {
 };
 
 
+
 exports.updateUser = async (req, res) => {
     const userId = req.params.id;
+
+    if (!req.user) {
+        return res.status(401).json({ message: 'User not authenticated' });
+    }
 
     if (req.user.id !== userId && req.user.role !== 'admin') {
         return res.status(403).json({ message: 'You are not authorized to update this user' });
@@ -103,20 +112,20 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
     const userId = req.params.id;
 
+    if (!req.user || req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'You are not authorized to delete this user' });
+    }
+
     try {
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        
-        if (req.user.role !== 'admin') {
-            return res.status(403).json({ message: 'You are not authorized to delete this user' });
-        }
-
-        await user.remove();
+        await User.findByIdAndDelete(userId); // or await user.deleteOne();
         res.status(200).json({ message: 'User deleted successfully' });
     } catch (err) {
         res.status(400).json({ message: 'Error deleting user', error: err.message });
     }
 };
+
