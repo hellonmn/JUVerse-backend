@@ -2,7 +2,7 @@
 
 ## Base URL
 ```
-https://juverse-backend.onrender.com/api/user/fetchAll/api/
+https://juverse-backend.onrender.com/api/
 ```
 
 ## 1️⃣ Authentication API (`/api/auth`)
